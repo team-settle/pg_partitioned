@@ -1,8 +1,6 @@
 # PgPartitioned
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pg_partitioned`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Manage PostgreSQL partitioned tables with Rails.
 
 ## Installation
 
@@ -22,7 +20,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Pass the `partition_by` option to `create_table` as follows:
+
+```ruby
+create_table :my_partitioned_table,
+             primary_key: [ :id, :partition_key_column ]
+             partition_by: { strategy: :list, key: [ :partition_key_column ] }
+```
+
+Note that any primary key or unique indices must contain the partition key.
+This may in turn require [composite primary keys](https://github.com/composite-primary-keys/composite_primary_keys).
+
+Currently, there's no functionality to directly manage the partitions themselves: manage them manually or with some other tool.
+Use `ActiveRecord::SchemaDumper.ignore_tables` to prevent dynamically managed partitions from being dumped into `schema.rb`.
 
 ## Development
 
@@ -32,7 +42,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pg_partitioned.
+Bug reports and pull requests are welcome on GitHub at https://github.com/team-settle/pg_partitioned.
 
 ## License
 
