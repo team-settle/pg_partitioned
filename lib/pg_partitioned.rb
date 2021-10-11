@@ -2,10 +2,9 @@
 
 require_relative "pg_partitioned/version"
 require "pg_partitioned/railtie"
-require "pg_partitioned/schema_dumper"
 require "pg_partitioned/schema_statements"
+require "pg_partitioned/partitionable"
 
 module PgPartitioned
-  class Error < StandardError; end
-  # Your code goes here...
+  class NotYetImplementedError < StandardError; end
 end
