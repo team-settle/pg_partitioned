@@ -6,7 +6,7 @@ module PgPartitioned
     include CreateTablePartitionBy
     include CreateTablePartitionOf
 
-    def create_table(table_name, partition_of: nil, partition_by: nil, **options)
+    def create_table(table_name, partition_of: nil, partition_by: nil, inherits: nil, **options)
       options[:options] = [
         partition_of ? partition_of_clause(**partition_of) : nil,
         partition_by ? partition_by_clause(**partition_by) : nil,
@@ -20,7 +20,7 @@ module PgPartitioned
       super.to_h.merge(
         {
           partition_of: partition_of_options(table_name),
-          partition_by: partition_by_options(table_name)
+          partition_by: partition_by_options(table_name),
         }.compact!
       )
     end
